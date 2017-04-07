@@ -1,3 +1,9 @@
+//I want to load the items of the html into an arrary of objects,
+// the shoppingList
+//Then I want to be able to add to that list
+//I want to pass that info in a html type into the site and load to the end of list
+//Then I want to be able to check items and uncheck them
+//finally I want to be able to delete item from the list
 let shoppingList = {
     apples: {
         name: 'apples',
