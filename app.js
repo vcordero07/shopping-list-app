@@ -1,9 +1,10 @@
-//I want to load the items of the html into an arrary of objects,
-// the shoppingList
-//Then I want to be able to add to that list
-//I want to pass that info in a html type into the site and load to the end of list
-//Then I want to be able to check items and uncheck them
-//finally I want to be able to delete item from the list
+//-to load the items of the html into an arrary of objects, the shoppingList
+//- be able to add to that list
+//-pass that info in a html type into the site and load to the end of list
+//-be able to check items and uncheck them
+//-be able to delete item from the list
+console.clear();
+
 let shoppingList = {
     apples: {
         name: 'apples',
@@ -24,12 +25,14 @@ let shoppingList = {
 };
 
 
-console.log(shoppingList);
-console.log(Object.keys(shoppingList));
-console.log(Object.keys(shoppingList)[0]);
+// console.log(shoppingList);
+// console.log(Object.keys(shoppingList));
+// console.log(Object.keys(shoppingList)[0]);
 
 let addItem = function(list, shoppingItems) {
-    return list.items.push(shoppingItems);
+    console.log(list);
+    console.log(shoppingItems);
+    return list.push(shoppingItems);
 };
 
 let renderList = function(list, element) {
@@ -52,9 +55,17 @@ $('#js-shopping-list-form').submit(function(event) {
 
 });
 
-$(".shopping-item-toggle").click(function() {
-    $(this).addClass('shopping-item__checked');
+$('.shopping-item-toggle').click(function(event) {
+    event.stopPropagation();
+    //$('.shopping-item').closest('span.shopping-item').toggleClass('shopping-item__checked');
+    $('.shopping-item').closest('span.shopping-item').toggleClass('shopping-item__checked');
+    console.log($(event.currentTarget)[0].parentElement.previousElementSibling);
+    $(event.currentTarget).toggleClass('shopping-item__checked');
+    //$(this).parentElement.previousElementSibling.toggleClass('shopping-item__checked');
+    console.log($(this));
+    console.log($('button.shopping-item-toggle').closest('span').toggleClass('shopping-item__checked'));
 });
+
 
 // let retrievePopulatedItems = () => {
 
@@ -67,7 +78,6 @@ $(".shopping-item-toggle").click(function() {
 //     //console.log($(ind));
 //     //console.log($(ind)[0]);
 //     console.log(ele);
-
 
 //     //console.log($(ind)[0].classList.value);
 
