@@ -5,24 +5,26 @@
 //-be able to delete item from the list
 console.clear();
 
-let shoppingList = {
-    apples: {
-        name: 'apples',
-        check: false
-    },
-    oranges: {
-        name: 'oranges',
-        check: false
-    },
-    bread: {
-        name: 'bread',
-        check: false
-    },
-    milk: {
-        name: 'milk',
-        check: true
-    }
-};
+// let shoppingList = {
+//   apples: {
+//     name: 'apples',
+//     check: false
+//   },
+//   oranges: {
+//     name: 'oranges',
+//     check: false
+//   },
+//   bread: {
+//     name: 'bread',
+//     check: false
+//   },
+//   milk: {
+//     name: 'milk',
+//     check: true
+//   }
+// };
+
+let shoppingList = ['apples', 'oranges', 'bread', 'milk'];
 
 
 // console.log(shoppingList);
@@ -36,7 +38,7 @@ let addItem = function(list, shoppingItems) {
 };
 
 let renderList = function(list, element) {
-    let itemsHTML = list.items.map(function(item) {
+    let itemsHTML = list.map(function(item) {
         return `<li>
       <span class="shopping-item">${item}</span>
       <div class="shopping-item-controls">
@@ -50,20 +52,31 @@ let renderList = function(list, element) {
 
 $('#js-shopping-list-form').submit(function(event) {
     event.preventDefault();
-    addItem(shoppingList, $('#shopping-list-entry').val());
-    renderList(shoppingList, $('.shopping-list'));
-
+    let input = $('#shopping-list-entry');
+    let inputValue = input.val();
+    if ((inputValue !== '') && ($.trim(inputValue) !== '')) {
+        addItem(shoppingList, inputValue);
+        renderList(shoppingList, $('.shopping-list'));
+    }
+    input.val('');
 });
 
 $('.shopping-item-toggle').click(function(event) {
     event.stopPropagation();
     //$('.shopping-item').closest('span.shopping-item').toggleClass('shopping-item__checked');
-    $('.shopping-item').closest('span.shopping-item').toggleClass('shopping-item__checked');
-    console.log($(event.currentTarget)[0].parentElement.previousElementSibling);
-    $(event.currentTarget).toggleClass('shopping-item__checked');
+    //$(this).closest('span.shopping-item').toggleClass('shopping-item__checked');
+    //console.log($(event.currentTarget)[0].parentElement.previousElementSibling);
+    $(this).closest('li').find('shopping-item').toggleClass('shopping-item__checked');
     //$(this).parentElement.previousElementSibling.toggleClass('shopping-item__checked');
-    console.log($(this));
-    console.log($('button.shopping-item-toggle').closest('span').toggleClass('shopping-item__checked'));
+    //console.log($(this));
+    //console.log($( 'button.shopping-item-toggle').closest( 'span' ).toggleClass('shopping-item__checked'));
+});
+
+
+$('.shopping-item-delete').on('click', 'li', event => {
+    //event.stopPropagation();
+    //$(this).closest('li').remove();
+    $(this).remove();
 });
 
 
