@@ -24,7 +24,8 @@ console.clear();
 //   }
 // };
 
-let shoppingList = ['apples', 'oranges', 'bread', 'milk'];
+let shoppingList;
+//let shoppingList = ['apples', 'oranges', 'bread', 'milk'];
 
 
 // console.log(shoppingList);
@@ -38,6 +39,7 @@ let addItem = function(list, shoppingItems) {
 };
 
 let renderList = function(list, element) {
+    console.log(list, element);
     let itemsHTML = list.map(function(item) {
         return `<li>
       <span class="shopping-item">${item}</span>
@@ -63,54 +65,53 @@ $('#js-shopping-list-form').submit(function(event) {
 
 $('.shopping-item-toggle').click(function(event) {
     event.stopPropagation();
-    //$('.shopping-item').closest('span.shopping-item').toggleClass('shopping-item__checked');
-    //$(this).closest('span.shopping-item').toggleClass('shopping-item__checked');
-    //console.log($(event.currentTarget)[0].parentElement.previousElementSibling);
-    $(this).closest('li').find('shopping-item').toggleClass('shopping-item__checked');
-    //$(this).parentElement.previousElementSibling.toggleClass('shopping-item__checked');
+    let item = $(this).closest('li').find('span.shopping-item').html()
+    console.log(shoppingList);
+    shoppingList = shoppingList.map((ind, ele) => {
+        console.log(ind);
+        console.log(ele);
+        console.log({
+            name: ele[ind].name,
+            check: ele[ind].name === item ? !ele[ind].check : ele[ind].check
+        });
+        return {
+            name: ele.name,
+            check: ele.name === item ? !ele.check : ele.check
+        };
+    });
+    renderList(shoppingList, $('.shopping-list')[0]);
+    console.log(shoppingList);
+    //$(this).closest('li').find('shopping-item').toggleClass('shopping-item__checked');
     //console.log($(this));
-    //console.log($( 'button.shopping-item-toggle').closest( 'span' ).toggleClass('shopping-item__checked'));
+    //console.log($($(this).closest('li')[0]).find('.shopping-item').toggleClass('shopping-item__checked'));
 });
 
 
-$('.shopping-item-delete').on('click', 'li', event => {
+$('.shopping-item-delete').click(event => {
     //event.stopPropagation();
     //$(this).closest('li').remove();
+    console.log($(this));
     $(this).remove();
 });
 
 
-// let retrievePopulatedItems = () => {
+let retrievePopulatedItems = () => {
 
-//   //get item from html list
-//   //console.log( $('.shopping-list').find('.shopping-item'));
-//    let obj;
-//   $('.shopping-list').find('.shopping-item').map((ele, ind) => {
-//     //console.log(ele, ind);
+    //get item from html list
+    //The index is only reverse when using $() in jQuery .map
+    return $('.shopping-list').find('.shopping-item').map((ind, ele) => {
 
-//     //console.log($(ind));
-//     //console.log($(ind)[0]);
-//     console.log(ele);
+        return {
+            name: $(ele).html(),
+            //check: $(ind)[0].classList.value.length === 36 && $(ind)[0].classList.value.slice(-22) === 'shopping-item__checked' ? true : false
+            check: $(ele).hasClass('shopping-item__checked')
+        }
+    });
+};
 
-//     //console.log($(ind)[0].classList.value);
+let init = () => {
+    shoppingList = retrievePopulatedItems();
+    //console.log(shoppingList);
+}
 
-//     obj = {
-//       name: $(ind)[0].innerHTML,
-//       check: $(ind)[0].classList.value.length === 36 && $(ind)[0].classList.value.slice(-22) === 'shopping-item__checked' ? true : false
-//     };
-
-//     console.log($(ind)[0].innerHTML);
-//     console.log($(ind)[0].classList.value.length === 36 && $(ind)[0].classList.value.slice(-22) === 'shopping-item__checked' ? true : false  );
-
-//   }) ;
-//   console.log(obj);
-//          return obj;
-// };
-
-// let init = () => {
-
-//   $(retrievePopulatedItems);
-//   console.log(`test: ${shoppingList}`);
-// }
-
-// $(init);
+$(init);
