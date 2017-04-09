@@ -5,28 +5,8 @@
 //-be able to delete item from the list
 console.clear();
 
-// let shoppingList = {
-//   apples: {
-//     name: 'apples',
-//     check: false
-//   },
-//   oranges: {
-//     name: 'oranges',
-//     check: false
-//   },
-//   bread: {
-//     name: 'bread',
-//     check: false
-//   },
-//   milk: {
-//     name: 'milk',
-//     check: true
-//   }
-// };
-
 let shoppingList;
 //let shoppingList = ['apples', 'oranges', 'bread', 'milk'];
-
 
 // console.log(shoppingList);
 // console.log(Object.keys(shoppingList));
@@ -39,18 +19,32 @@ let addItem = function(list, shoppingItems) {
 };
 
 let renderList = function(list, element) {
-    console.log(list, element);
-    let itemsHTML = list.map(function(item) {
-        return `<li>
-      <span class="shopping-item">${item}</span>
-      <div class="shopping-item-controls">
-      <button class="shopping-item-toggle"><span class="button-label">check</span></button>
-      <button class="shopping-item-delete"><span class="button-label">delete</span></button>
-      </div>
-      </li>`;
+    //console.log(list, element);
+    //let itemsHTML = list.map(function(ind, ele) {
+    return list.map(function(ind, ele) {
+        //console.log(ele);
+        //console.log(ele.check === true);
+        if (ele.check === true) {
+            return `<li><span class="shopping-item shopping-item__checked">${ele.name}</span><div class="shopping-item-controls"><button class="shopping-item-toggle"><span class="button-label">check</span></button><button class="shopping-item-delete"><span class="button-label">delete</span></button></div></li>`;
+        } else {
+            return `<li><span class="shopping-item">${ele.name}</span><div class="shopping-item-controls"><button class="shopping-item-toggle"><span class="button-label">check</span></button><button class="shopping-item-delete"><span class="button-label">delete</span></button></div></li>`;
+        };
     });
-    element.html(itemsHTML);
+    //   console.log(element);
+    //   console.log(itemsHTML);
+    //     element.append(itemsHTML);
+
 };
+
+let pushToHTML = (items, elements) => {
+    console.log(items);
+    console.log(elements);
+    console.log("this is a test");
+    console.log($(elements).append(items));
+    return $(elements).append(items);
+};
+
+
 
 $('#js-shopping-list-form').submit(function(event) {
     event.preventDefault();
@@ -65,22 +59,24 @@ $('#js-shopping-list-form').submit(function(event) {
 
 $('.shopping-item-toggle').click(function(event) {
     event.stopPropagation();
-    let item = $(this).closest('li').find('span.shopping-item').html()
-    console.log(shoppingList);
+    let item = $(this).closest('li').find('span.shopping-item').html();
+    //console.log(shoppingList);
     shoppingList = shoppingList.map((ind, ele) => {
-        console.log(ind);
-        console.log(ele);
-        console.log({
-            name: ele[ind].name,
-            check: ele[ind].name === item ? !ele[ind].check : ele[ind].check
-        });
+        //console.log(ind);
+        //console.log(ele);
+        //console.log({
+        //    name: ele.name,
+        //    check: ele.name === item ? !ele.check : ele.check
+        //});
         return {
             name: ele.name,
             check: ele.name === item ? !ele.check : ele.check
         };
     });
-    renderList(shoppingList, $('.shopping-list')[0]);
-    console.log(shoppingList);
+    let renderedList = renderList(shoppingList, $('.shopping-list')[0]);
+    //console.log(renderedList);
+    pushToHTML(renderedList, '.shopping-list');
+    //console.log(shoppingList);
     //$(this).closest('li').find('shopping-item').toggleClass('shopping-item__checked');
     //console.log($(this));
     //console.log($($(this).closest('li')[0]).find('.shopping-item').toggleClass('shopping-item__checked'));
