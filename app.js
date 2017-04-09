@@ -25,9 +25,29 @@ let renderList = function(list, element) {
         //console.log(ele);
         //console.log(ele.check === true);
         if (ele.check === true) {
-            return `<li><span class="shopping-item shopping-item__checked">${ele.name}</span><div class="shopping-item-controls"><button class="shopping-item-toggle"><span class="button-label">check</span></button><button class="shopping-item-delete"><span class="button-label">delete</span></button></div></li>`;
+            return `<li>
+                    <span class="shopping-item shopping-item__checked">${ele.name}</span>
+                    <div class="shopping-item-controls">
+                    <button class="shopping-item-toggle">
+                    <span class="button-label">check</span>
+                    </button>
+                    <button class="shopping-item-delete">
+                    <span class="button-label">delete</span>
+                    </button>
+                    </div>
+                    </li>`;
         } else {
-            return `<li><span class="shopping-item">${ele.name}</span><div class="shopping-item-controls"><button class="shopping-item-toggle"><span class="button-label">check</span></button><button class="shopping-item-delete"><span class="button-label">delete</span></button></div></li>`;
+            return `<li>
+                    <span class="shopping-item">${ele.name}</span>
+                    <div class="shopping-item-controls">
+                    <button class="shopping-item-toggle">
+                    <span class="button-label">check</span>
+                    </button>
+                    <button class="shopping-item-delete">
+                    <span class="button-label">delete</span>
+                    </button>
+                    </div>
+                    </li>`;
         };
     });
     //   console.log(element);
@@ -37,11 +57,12 @@ let renderList = function(list, element) {
 };
 
 let pushToHTML = (items, elements) => {
-    console.log(items);
+    console.log($(items));
     console.log(elements);
     console.log("this is a test");
-    console.log($(elements).append(items));
-    return $(elements).append(items);
+    //console.log($(elements ).append($(items)));
+    //console.log($('shopping-list').innerHTML(items));
+    return $('shopping-list').html($(items));
 };
 
 
@@ -75,7 +96,8 @@ $('.shopping-item-toggle').click(function(event) {
     });
     let renderedList = renderList(shoppingList, $('.shopping-list')[0]);
     //console.log(renderedList);
-    pushToHTML(renderedList, '.shopping-list');
+    pushToHTML(renderedList, "'.shopping-list'");
+    console.log(shoppingList);
     //console.log(shoppingList);
     //$(this).closest('li').find('shopping-item').toggleClass('shopping-item__checked');
     //console.log($(this));
