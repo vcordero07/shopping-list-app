@@ -35,9 +35,9 @@ let getArrayOfItemsComponents = () => {
 
 let renderList = () => {
     const list = getArrayOfItemsComponents();
-    //console.log($('.shopping-list')[0]);
+    //console.log(list);
     const ele = $('.shopping-list');
-    console.log(ele);
+    //console.log(ele);
     ele.html(list);
 };
 
@@ -49,25 +49,28 @@ $('#js-shopping-list-form').submit(function(event) {
     if ((inputValue !== '') && ($.trim(inputValue) !== '')) {
         addItem(inputValue);
         renderList();
+        console.log(shoppingList);
     }
 
     input.val('');
 });
 
-$('.shopping-item-toggle').click(function(event) {
-    event.preventDefault();
-    let item = $(this).closest('li').find('span.shopping-item').html();
-
+$('.shopping-item-toggle').on('click', 'span', event => {
+    //event.stopPropagation();
+    let item = $(event.currentTarget).closest('li').find('.shopping-item').html();
+    console.log(item);
+    // $($(this).closest('li')[0]).find('.shopping-item').toggleClass('shopping-item__checked');
     shoppingList = shoppingList.map((ele, ind) => {
+        console.log(ele);
         return {
             name: ele.name,
             check: ele.name === item ? !ele.check : ele.check
         };
     });
 
-    getArrayOfItemsComponents();
+    //getArrayOfItemsComponents();
     renderList();
-
+    console.log(shoppingList);
 });
 
 $('.shopping-item-delete').click(event => {
@@ -89,7 +92,6 @@ let init = () => {
 }
 
 $(init);
-
 
 // //---------------------------
 // //other version//
