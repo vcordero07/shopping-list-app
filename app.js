@@ -7,12 +7,14 @@ console.clear();
 
 let shoppingList;
 
+
 let addItem = shoppingItem => {
     shoppingList.unshift({
         name: shoppingItem,
         check: false
     });
 };
+
 
 let getArrayOfItemsComponents = () => {
 
@@ -33,6 +35,7 @@ let getArrayOfItemsComponents = () => {
     });
 };
 
+
 let renderList = () => {
     const list = getArrayOfItemsComponents();
     //console.log(list);
@@ -41,7 +44,8 @@ let renderList = () => {
     ele.html(list);
 };
 
-$('#js-shopping-list-form').submit(function(event) {
+
+$('#js-shopping-list-form').submit(event => {
     event.preventDefault();
     let input = $('#shopping-list-entry');
     let inputValue = input.val();
@@ -54,6 +58,7 @@ $('#js-shopping-list-form').submit(function(event) {
 
     input.val('');
 });
+
 
 $('.shopping-item-toggle').on('click', 'span', event => {
     //event.stopPropagation();
