@@ -7,7 +7,6 @@ console.clear();
 
 let shoppingList;
 
-
 let addItem = shoppingItem => {
     shoppingList.unshift({
         name: shoppingItem,
@@ -15,9 +14,13 @@ let addItem = shoppingItem => {
     });
 };
 
+let deleteItem = shoppingItem => {
+    shoppingList.shift({
+        name: shoppingItem
+    })
+}
 
 let getArrayOfItemsComponents = () => {
-
     return shoppingList.map((ele, ind) => {
         const shoppingItemClass = ele.check ? 'shopping-item__checked' : null;
         return `<li>
@@ -35,15 +38,11 @@ let getArrayOfItemsComponents = () => {
     });
 };
 
-
 let renderList = () => {
     const list = getArrayOfItemsComponents();
-    //console.log(list);
     const ele = $('.shopping-list');
-    //console.log(ele);
     ele.html(list);
 };
-
 
 $('#js-shopping-list-form').submit(event => {
     event.preventDefault();
@@ -53,38 +52,33 @@ $('#js-shopping-list-form').submit(event => {
     if ((inputValue !== '') && ($.trim(inputValue) !== '')) {
         addItem(inputValue);
         renderList();
-        console.log(shoppingList);
     }
 
     input.val('');
 });
 
-
-$('.shopping-item-toggle').on('click', 'span', event => {
+$('body').on('click', '.shopping-item-toggle', event => {
+    //$('body').delegate( '.shopping-item-toggle', 'click', function(event) {
     //event.stopPropagation();
     let item = $(event.currentTarget).closest('li').find('.shopping-item').html();
-    console.log(item);
-    // $($(this).closest('li')[0]).find('.shopping-item').toggleClass('shopping-item__checked');
+
     shoppingList = shoppingList.map((ele, ind) => {
-        console.log(ele);
         return {
             name: ele.name,
             check: ele.name === item ? !ele.check : ele.check
         };
     });
-
-    //getArrayOfItemsComponents();
     renderList();
-    console.log(shoppingList);
-});
+}); //.change();
 
-$('.shopping-item-delete').click(event => {
-    $(this).remove();
+$('body').on('click', '.shopping-item-delete', event => {
+    let item = $(event.currentTarget).closest('li').find('.shopping-item').html();
+    deleteItem(item);
+    $(event.currentTarget).closest('li').remove();
 });
-
 
 let retrievePopulatedItems = () => {
-    return $('.shopping-list').find('.shopping-item').map((ind, ele) => {
+    return $('.shopping-list').find('.shopping-item').map(function(ind, ele) {
         return {
             name: $(ele).html(),
             check: $(ele).hasClass('shopping-item__checked')
@@ -97,54 +91,3 @@ let init = () => {
 }
 
 $(init);
-
-// //---------------------------
-// //other version//
-//
-// console.clear();
-//
-// //let shoppingList = ['apples', 'oranges', 'bread', 'milk'];
-// let shoppingList = [];
-//
-// let addItem = function(list, shoppingItems) {
-//     console.log('list:', list);
-//     //console.log(shoppingItems);
-//     return list.push(shoppingItems);
-// };
-//
-// let renderList = function(list, element) {
-//     let itemsHTML = list.map(function(item) {
-//         return `<li>
-//       <span class="shopping-item">${item}</span>
-//       <div class="shopping-item-controls">
-//       <button class="shopping-item-toggle"><span class="button-label">check</span></button>
-//       <button class="shopping-item-delete"><span class="button-label">delete</span></button>
-//       </div>
-//       </li>`;
-//     });
-//     element.prepend(itemsHTML);
-// };
-//
-// $('#js-shopping-list-form').submit(function(event) {
-//     event.preventDefault();
-//     let input = $('#shopping-list-entry').val();
-//     if ((input !== '') && ($.trim(input) !== '')) {
-//         console.log('list entry value:', $('#shopping-list-entry').val());
-//         addItem(shoppingList, $('#shopping-list-entry').val());
-//         console.log('shopppingList: ', shoppingList);
-//         renderList(shoppingList, $('.shopping-list'));
-//     }
-//     $('#shopping-list-entry').val('');
-// });
-//
-// $('.shopping-item-toggle').on('click', 'span', function(event) {
-//     //event.stopPropagation();
-//     //event.preventDefault();
-//     console.log('item-toggle: ', event);
-//     $($(this).closest('li')[0]).find('.shopping-item').toggleClass('shopping-item__checked');
-// });
-//
-//
-// $('.shopping-item-delete').click(function() {
-//     $(this).closest('li').remove();
-// });
