@@ -1,8 +1,3 @@
-//-load items of the html into an arrary of objects, the shoppingList
-//-add to that list
-//-render the new item to the list
-//-check items and uncheck them
-//-delete item from the list
 console.clear();
 
 const classes = {
